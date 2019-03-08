@@ -38,17 +38,15 @@ function revocable(target, handler) {
   
   return harden({
     proxy,
-    revoke: () => {target = null; handler = null;}
+    revoke() {target = null; handler = null;}
   });
-}
-
-function makeProxy(target, handler) {
-  return revocable(target, handler).proxy;
 }
 
 const JessieProxy = {
   revocable,
-  makeProxy
+  makeProxy(target, handler) {
+    return revocable(target, handler).proxy;
+  }
 };
 
 export default JessieProxy;
